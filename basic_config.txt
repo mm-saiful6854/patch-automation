@@ -1,0 +1,2 @@
+remote_host_config_filename=remote_hosts_config.txt
+local_file_path=/home/maahi/__workspace/projects/REVE-SMS/test/senderIDList.zip
