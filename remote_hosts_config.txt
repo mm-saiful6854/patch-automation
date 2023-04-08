@@ -3,7 +3,7 @@ host1=149.20.188.26
 port1=22
 username1=root
 password1=Rr&d@#TesT!ng$erver%^&*%%
-remote_dir_path=/usr/local/SMS_APP_SERVER_v4Dev/senderIDList.zip
+remote_dir_path=/usr/local/SMS_APP_SERVER_v4Dev/
 
 
 #host2=192.168.1.1
