@@ -1,3 +1,3 @@
 remote_host_config_filename=remote_hosts_config.txt
 local_file_path=/home/maahi/__workspace/projects/REVE-SMS/test/
-last_check_time=07-04-2023 22:41:10
+last_check_time=14-04-2023 15:48:51

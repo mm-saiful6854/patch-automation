@@ -208,13 +208,13 @@ def convert_time_string_into_unix_time(time_string):
 
 
 
-def get_updated_file_list(source_dir_path, last_check_time_str, current_time):
+def get_updated_file_list(source_dir_path, last_check_time_str, current_time_str):
     print("\nchecking for patch: ")
     
-    last_check_time = convert_time_string_into_unix_time(last_check_time_str)
-    current_unix_time = convert_time_string_into_unix_time(current_time)
+    last_check_unix_time = convert_time_string_into_unix_time(last_check_time_str)
+    current_unix_time = convert_time_string_into_unix_time(current_time_str)
     print('\tcurrent time: {}'.format(current_unix_time))
-    print("\tlast check unix time: {}".format(last_check_time))
+    print("\tlast check unix time: {}".format(last_check_unix_time))
     print('')
 
     patch_file_list=[]
@@ -222,6 +222,9 @@ def get_updated_file_list(source_dir_path, last_check_time_str, current_time):
     for file in files:
         # Get the full path of the file
         file_path = os.path.join(source_dir_path, file)
+        if(os.path.isdir(file_path)):
+            get_upload_file_list_in_recursive(file_path, file, patch_file_list, last_check_unix_time, current_unix_time)
+            continue
         # Get the file's details
         file_stats = os.stat(file_path)
         # type casting float -> int
@@ -230,12 +233,30 @@ def get_updated_file_list(source_dir_path, last_check_time_str, current_time):
         # Print the file's details
         print(f'\tFilename: {file}')
         print(f'\tLast modified: {last_modified}')
-        if(last_modified>last_check_time and last_modified<=current_unix_time):
+        if(last_modified>last_check_unix_time and last_modified<=current_unix_time):
             patch_file_list.append(file)
-        """print(f'Path: {file_path}')
-        print(f'Size: {file_stats.st_size} bytes')
-        print(f'Last accessed: {file_stats.st_atime}')
-        print(f'Created: {file_stats.st_ctime}')"""
+        print('')
+    return patch_file_list
+
+
+def get_upload_file_list_in_recursive(path, dir_name, patch_file_list, last_check_unix_time, current_unix_time):
+    files = os.listdir(path)
+    for file in files:
+        # Get the full path of the file
+        file_path = os.path.join(path, file)
+        if(os.path.isdir(file_path)):
+            get_upload_file_list_in_recursive(file_path,dir_name+'/'+file,patch_file_list, last_check_unix_time, current_unix_time)
+            continue
+        # Get the file's details
+        file_stats = os.stat(file_path)
+        # type casting float -> int
+        last_modified = int(file_stats.st_mtime*1000)
+
+        # Print the file's details
+        print(f'\tFilename: {file}')
+        print(f'\tLast modified: {last_modified}')
+        if(last_modified>last_check_unix_time and last_modified<=current_unix_time):
+            patch_file_list.append(dir_name+'/'+file)
         print('')
     return patch_file_list
 
