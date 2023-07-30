@@ -113,7 +113,7 @@ def execute_command_by_invoke_shell(ssh_client):
     # start an interactive shell
     shell = ssh_client.invoke_shell()
 
-    # send the unzip command
+    # send the unzip command to server
     shell.send('unzip -o archive.zip\n')
 
     # wait for the overwrite prompt
