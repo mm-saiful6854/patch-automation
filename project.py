@@ -137,7 +137,7 @@ def execute_command_by_invoke_shell(ssh_client):
 read file where contents are like this:
 parameter=value
 return value is dictionary like this:
-{parameter: value}
+{parameter: value} and so on.
 '''
 def read_file(filename):
     if(filename==None):
